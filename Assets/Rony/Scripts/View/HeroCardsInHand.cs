@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Mono.Cecil;
 using UnityEngine;
 
 public class HeroCardsInHand : MonoBehaviour
@@ -8,14 +9,13 @@ public class HeroCardsInHand : MonoBehaviour
 
 
 
-    public void LoadAllCardsInHand(List<HeroCardSO> allCards)
+    public void LoadAllCardsInHand(List<HeroCardSO> allHeroCards)
     {
-        foreach (var card in allCards)
+        foreach (var card in allHeroCards)
         {
             GameObject cardGo = Instantiate(heroCardPrefab, transform);
             HeroCard newCard = cardGo.GetComponent<HeroCard>();
             newCard.Setup(card);
-
         }
     }
 }
