@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
+using SQLite;
 
-[Serializable]
+[Table("herocardsnapshots")]
 public class HeroCardSnapshot
 {
-    public string formationName;
-    public int cardId;
-    public int count;
+    [PrimaryKey, AutoIncrement]
+    public int cardId { get; set; }
+    public int count { get; set; }
+    public int level { get; set; }
 }

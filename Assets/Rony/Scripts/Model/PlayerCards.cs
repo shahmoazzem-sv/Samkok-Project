@@ -10,6 +10,7 @@ public class PlayerCards : MonoBehaviour
 
     void Start()
     {
+        DBContext.Instance.SaveData(new HeroCardSnapshot() { cardId = 1, count = 1, level = 1 });
         List<HeroCardSnapshot> db = DBContext.Instance.LoadData();
         Debug.Log(db.Count);
         List<HeroCardSO> inCollection = new List<HeroCardSO>();
