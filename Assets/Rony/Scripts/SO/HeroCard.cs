@@ -12,7 +12,14 @@ public class HeroCard : MonoBehaviour
 
     [SerializeField] Image cardImage;
 
+    public void Build(HeroCardSO cardSO = null)
+    {
+        if (cardSO != null)
+        {
+            Setup(cardSO);
+        }
 
+    }
     public void Setup(HeroCardSO cardSO)
     {
         cardImage.sprite = cardSO.heroSprite;
