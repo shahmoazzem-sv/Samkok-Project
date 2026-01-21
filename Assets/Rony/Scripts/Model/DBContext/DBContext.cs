@@ -1,5 +1,4 @@
 using SQLite;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -20,7 +19,8 @@ public class DBContext : MonoBehaviour
     {
         UseConnection(conn =>
         {
-            conn.CreateTable<HeroCardSnapshot>();
+            conn.CreateTable<HeroCardRecord>();
+            conn.CreateTable<HeroCardSquadRecord>();
         });
     }
 
@@ -40,7 +40,7 @@ public class DBContext : MonoBehaviour
             action(conn);
         }
     }
-
+    // This should do all CREATE thingy for our different Tables
     public void SaveData<T>(T snapshot)
     {
         UseConnection(conn =>
@@ -48,18 +48,36 @@ public class DBContext : MonoBehaviour
             conn.Insert(snapshot);
         });
     }
-    public List<HeroCardSnapshot> LoadData()
+    // This should do all the READ thingy for our different Tables
+    public List<T> LoadData<T>() where T : new()
     {
         if (!File.Exists(_path))
         {
             Debug.Log("Path Not Found");
-            return new List<HeroCardSnapshot>();
+            return new List<T>();
         }
-        List<HeroCardSnapshot> result;
-        return UseConnection<List<HeroCardSnapshot>>(conn =>
+        List<T> result;
+        return UseConnection(conn =>
         {
-            result = conn.Table<HeroCardSnapshot>().ToList();
+            result = conn.Table<T>().ToList();
             return result;
+        });
+    }
+    // We need an UPDATE method that is Record Agnostic
+    public int UpdateData<T>(T obj)
+    {
+        return UseConnection(conn =>
+        {
+            return conn.Update(obj);
+        });
+    }
+
+    // We need an DELETE method as well to delete a tuple from the database and we want it to take an Id and delete it
+    public int DeleteData<T>(string Id)
+    {
+        return UseConnection(conn =>
+        {
+            return conn.Delete<T>(Id);
         });
     }
 }
