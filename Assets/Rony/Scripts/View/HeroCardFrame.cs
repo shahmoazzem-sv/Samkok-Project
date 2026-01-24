@@ -4,26 +4,37 @@ using UnityEngine.UI;
 public class HeroCardFrame : MonoBehaviour, IPointerClickHandler
 {
     private HeroCardSquad heroCardSquad;
-    private Image thisFrame;
+    private Image thisFrameImage;
     void Awake()
     {
         heroCardSquad = GetComponentInParent<HeroCardSquad>();
-        thisFrame = GetComponent<Image>();
+        thisFrameImage = GetComponent<Image>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        heroCardSquad.currentCardPosition = transform.position;
+        heroCardSquad.currentFrame = this;
     }
     void Update()
     {
-        if (heroCardSquad.currentCardPosition == transform.position)
+        UpdateCardFrameColor();
+
+    }
+    public void InactiveImage()
+    {
+        thisFrameImage.enabled = false;
+    }
+
+    void UpdateCardFrameColor()
+    {
+        if (heroCardSquad.currentFrame == null) return;
+        if (heroCardSquad.currentFrame.transform == transform)
         {
-            thisFrame.color = Color.red;
+            thisFrameImage.color = Color.red;
         }
         else
         {
-            thisFrame.color = Color.white;
+            thisFrameImage.color = Color.white;
         }
     }
 }

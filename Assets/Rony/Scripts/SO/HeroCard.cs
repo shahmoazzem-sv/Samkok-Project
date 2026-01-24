@@ -2,26 +2,27 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HeroCard : MonoBehaviour
+public class HeroCard : MonoBehaviour, IPointerClickHandler
 {
 
     [SerializeField] TMP_Text Name;
     [SerializeField] TMP_Text Level;
 
     [SerializeField] Image cardImage;
+    HeroCardSO so;
+    public HeroCardSO HerocardSo => so;
 
-    public void Build(HeroCardSO cardSO = null)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (cardSO != null)
-        {
-            Setup(cardSO);
-        }
-
+        EventBus<HeroCard>.Raise(this);
     }
+
     public void Setup(HeroCardSO cardSO)
     {
+        so = cardSO;
         cardImage.sprite = cardSO.heroSprite;
         Name.text = cardSO.name;
         Level.text = cardSO.level.ToString();

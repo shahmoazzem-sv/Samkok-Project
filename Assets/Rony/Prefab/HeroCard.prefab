@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6721199307040022334}
   - component: {fileID: 3839512771507531583}
   - component: {fileID: 439578293588909299}
+  - component: {fileID: -1644109066257926670}
   m_Layer: 5
   m_Name: HeroCard
   m_TagString: Untagged
@@ -94,9 +95,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HeroCard
   Name: {fileID: 6513234738977630707}
   Level: {fileID: 2294102511671052665}
-  PowerSlider: {fileID: 0}
-  LifeSlider: {fileID: 0}
   cardImage: {fileID: 8288715615210638095}
+--- !u!61 &-1644109066257926670
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606553326660362478}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &4200774186925778761
 GameObject:
   m_ObjectHideFlags: 0

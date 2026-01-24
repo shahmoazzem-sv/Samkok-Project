@@ -1,15 +1,52 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 public class HeroCardsCollection : MonoBehaviour
 {
 
     [SerializeField] GameObject heroCardPrefab;
+    [SerializeField] HeroCardSquad heroCardSquad;
+    HeroCard clickedHeroCard;
     void Start()
     {
-        // we need to raycast to a card and find the object and then it will be sent to the position of the other card place that is in the squad
+    }
+    void Update()
+    {
 
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        //     pointerData.position = Input.mousePosition;
+        //     List<RaycastResult> results = new List<RaycastResult>();
+        //     EventSystem.current.RaycastAll(pointerData, results);
+        //     foreach (RaycastResult result in results)
+        //     {
+        //         // Debug.Log("Hit UI: " + result.gameObject.name);
+        //         HeroCard heroCard = result.gameObject.GetComponent<HeroCard>();
+        //         if (heroCard != null)
+        //         {
+        //             heroCard.transform.position = heroCardSquad.currentCardPosition;
+        //         }
+        //     }
+        // }
     }
 
+    void OnEnable()
+    {
+        EventBus<HeroCard>.Subscribe(HeroCardHandler);
+    }
+    void OnDisable()
+    {
+        EventBus<HeroCard>.Unsubscribe(HeroCardHandler);
+    }
+    void HeroCardHandler(HeroCard herocard)
+    {
+        herocard.transform.SetParent(heroCardSquad.currentFrame.transform);
+        herocard.transform.position = heroCardSquad.currentFrame.transform.position;
+        heroCardSquad.currentFrame.InactiveImage();
+    }
     public void LoadAllCardsInCollectionFromDatabase(List<HeroCardSO> allHeroCards)
     {
         foreach (var card in allHeroCards)
