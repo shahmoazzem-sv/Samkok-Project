@@ -43,8 +43,11 @@ public class HeroCardsCollection : MonoBehaviour
     }
     void HeroCardHandler(HeroCard herocard)
     {
-        herocard.transform.SetParent(heroCardSquad.currentFrame.transform);
-        herocard.transform.position = heroCardSquad.currentFrame.transform.position;
+        if (heroCardSquad.currentFrame.transform.childCount == 0)
+        {
+            herocard.transform.SetParent(heroCardSquad.currentFrame.transform);
+            herocard.transform.position = heroCardSquad.currentFrame.transform.position;
+        }
         heroCardSquad.currentFrame.InactiveImage();
     }
     public void LoadAllCardsInCollectionFromDatabase(List<HeroCardSO> allHeroCards)

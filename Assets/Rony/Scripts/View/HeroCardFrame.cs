@@ -22,7 +22,7 @@ public class HeroCardFrame : MonoBehaviour, IPointerClickHandler
     }
     public void InactiveImage()
     {
-        thisFrameImage.enabled = false;
+        // thisFrameImage.enabled = false;
     }
 
     void UpdateCardFrameColor()

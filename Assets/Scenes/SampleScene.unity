@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e7984f04cce58c48ac9ba62a7f0317b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeroCardSquad
-  currentCardPosition: {x: 0, y: 0, z: 0}
+  currentFrame: {fileID: 0}
 --- !u!1 &742916884
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 1497178266}
   - component: {fileID: 1497178267}
   - component: {fileID: 1497178268}
+  - component: {fileID: 1497178271}
   m_Layer: 5
   m_Name: Hero Cards Collection
   m_TagString: Untagged
@@ -908,6 +909,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   heroCardPrefab: {fileID: 606553326660362478, guid: 99aa24db64e47c64ab43516a1ed018f6, type: 3}
+  heroCardSquad: {fileID: 669490846}
+--- !u!222 &1497178271
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497178265}
+  m_CullTransparentMesh: 1
 --- !u!1 &1607228070
 GameObject:
   m_ObjectHideFlags: 0
