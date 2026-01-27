@@ -13,6 +13,7 @@ public class DBContext : MonoBehaviour
         Instance = this;
         _path = Path.Combine(Application.persistentDataPath, "database.sqlite");
         Debug.Log(_path);
+        Debug.Log(_path);
     }
 
     void Start()
