@@ -14,6 +14,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         foreach (var playerSpawnPoint in PlayerSpawnPoints)
         {
+            Debug.Log("Player Spawned");
             GameObject player = Instantiate(PlayerPrefab, playerSpawnPoint.transform.position, Quaternion.identity);
             Player playerSpawned = player.GetComponent<Player>();
             battleManager.AddPlayer(playerSpawned);

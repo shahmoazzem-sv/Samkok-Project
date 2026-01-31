@@ -1,19 +1,13 @@
 using System;
-public enum GameState
-{
-    Start,
-    Fight,
-    End
-}
 
-public enum LifeCycle
+public enum EntityState
 {
     Idle,
+    GotoOpponent,
     Attack,
-    TakeDamage,
     Die
 }
-public enum PlayerMove
+public enum PlayerType
 {
     Melee,
     Projectile

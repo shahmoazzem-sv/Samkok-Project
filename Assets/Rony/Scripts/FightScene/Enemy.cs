@@ -7,23 +7,23 @@ public class Enemy : MonoBehaviour
     private List<GameObject> playerLocations;
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody2D rb;
-    public GameState gameState;
+    EntityState currentState;
     Transform original;
     public float life = 100;
     public int hitPoint = 10;
     public float speed = 0.0001f;
-    System.Random prng;
 
-    Player targetToAttack;
+    public Player targetToAttack;
+    StateMachine enemyStateMachine;
 
-    public void SetTarget(Player target)
+    public void SetTarget(Player target) // on enter do this
     {
         targetToAttack = target;
     }
 
     void Awake()
     {
-        prng = new System.Random();
+        enemyStateMachine = new StateMachine();
     }
     void Start()
     {
@@ -34,42 +34,39 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (gameState)
+        enemyStateMachine.Update();
+    }
+    public void ChangeState(EntityState newState)
+    {
+        if (currentState != newState)
         {
-            case GameState.Start:
+            currentState = newState;
+        }
+        switch (currentState)
+        {
+            case EntityState.Idle:
+                Debug.Log("In debug mode");
+                // anim.Play("Idle");
                 break;
-            case GameState.Fight:
+            case EntityState.GotoOpponent:
+                enemyStateMachine.SetState(new EnemyGotoOpponentState(this));
                 break;
-            case GameState.End:
+            case EntityState.Attack:
+                // Attack();
+                Debug.Log("Attack!!!!!!");
+                break;
+            case EntityState.Die:
                 break;
             default:
                 break;
         }
     }
-    Transform GetRandomLocation()
-    {
-        int randomIndex = prng.Next(0, playerLocations.Count);
-        return playerLocations[randomIndex].transform;
-    }
-    void Attack()
-    {
-        // walk animation
-        // anim.SetTrigger("Run");
-        // reach near enemy
-        Transform enemy = GetRandomLocation();
-        MoveSelfFromTo(transform, enemy);
-        // attack animation
-        // anim.SetTrigger("attack1");
-        // get back to the original position
-        // MoveSelfFromTo(enemy, original);
-    }
-    void MoveSelfFromTo(Transform a, Transform b)
+    public void MoveSelfFromTo(Transform a, Transform b)
     {
         transform.position = Vector2.MoveTowards(a.position, b.position, speed * Time.deltaTime);
     }
-    void OnTriggerEnter2D(Collider2D other)
+    public void TakeDamage(int opponentHitPoint)
     {
-        Player p = other.gameObject.GetComponent<Player>();
-        this.life -= p.hitPoint;
+        life -= opponentHitPoint;
     }
 }

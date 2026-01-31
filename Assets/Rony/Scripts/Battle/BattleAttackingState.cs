@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleAttackingState : IState
 {
     List<Player> players;
     List<Enemy> enemies;
-    public BattleAttackingState(BattleManager battleManager, List<Player> allPlayers, List<Enemy> allEnemies)
+    public BattleAttackingState(BattleManager battleManager)
     {
-        this.players = allPlayers;
-        this.enemies = allEnemies;
+        players = battleManager.players;
+        enemies = battleManager.enemies;
     }
     public void Enter()
     {
@@ -52,6 +53,11 @@ public class BattleAttackingState : IState
         }
 
         //Todo for all player and enemy , change their state to FightState
+        foreach ((Player player, Enemy enemy) in players.Zip(enemies, (player, enemy) => (player, enemy)))
+        {
+            player.ChangeState(EntityState.GotoOpponent);
+            enemy.ChangeState(EntityState.GotoOpponent);
+        }
 
     }
 

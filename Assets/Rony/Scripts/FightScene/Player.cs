@@ -1,48 +1,36 @@
 using UnityEngine;
-using System.Collections.Generic;
-
-using Unity.VisualScripting;
-using System.Diagnostics;
 public class Player : MonoBehaviour
 {
-    private List<GameObject> enemyLocations;
+    [Header("Player")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
+
+    [Header("Enemy")]
     public float speed = 0.0001f;
-    Transform original;
-    System.Random prng;
-    StateMachine stateMachine;
-    GameState currentState;
+    StateMachine playerStateMachine;
+    EntityState currentState;
 
-    Enemy targetToAttack;
+    public Enemy targetToAttack;
 
-    public void SetTarget(Enemy target)
-    {
-        targetToAttack = target;
-    }
 
-    public GameState gameState;
     public float life = 100;
     public int hitPoint = 10;
-    private float damage;
 
-
-    void Awake()
-    {
-
-    }
     void Start()
     {
-        original = transform;
-        stateMachine = new StateMachine();
+        playerStateMachine = new StateMachine();
+        ChangeState(EntityState.Idle);
     }
 
 
     void Update()
     {
-        stateMachine.Update();
+        playerStateMachine.Update();
     }
-    void ChangeState(GameState newState)
+
+    // This is the "Event" triggered by the State
+
+    public void ChangeState(EntityState newState)
     {
         if (currentState != newState)
         {
@@ -52,34 +40,36 @@ public class Player : MonoBehaviour
 
         switch (currentState)
         {
-            case GameState.Start:
+            case EntityState.Idle:
+                // Logic for Idle (or make an IdleState class)
+                anim.Play("Idle");
+                if (targetToAttack != null) ChangeState(EntityState.GotoOpponent);
                 break;
-            case GameState.Fight:
+            case EntityState.GotoOpponent:
+                playerStateMachine.SetState(new PlayerGotoOpponentState(this));
                 break;
-            case GameState.End:
+            case EntityState.Attack:
+                playerStateMachine.SetState(new PlayerAttackState(this));
+                break;
+            case EntityState.Die:
                 break;
             default:
                 break;
         }
     }
-    void Attack(Transform enemyTransform)
+    // Helper function used by the State
+    public void MoveSelfFromTo(Transform self, Transform target)
     {
-        // walk animation
-        // anim.SetTrigger("Walk");
-        // reach near enemy
-        // Transform enemy = GetRandomLocation();
-        MoveSelfFromTo(transform, enemyTransform);
-        // attack animation
-        // anim.SetTrigger("Ult");
-        // get back to the original position
-        // MoveSelfFromTo(enemy, original);
+        // Use Time.deltaTime for Update(), Time.fixedDeltaTime for FixedUpdate()
+        self.position = Vector2.MoveTowards(self.position, target.position, speed * Time.deltaTime);
     }
-    void MoveSelfFromTo(Transform a, Transform b)
+    public void TakeDamage(int opponentHitPoint)
     {
-        transform.position = Vector2.MoveTowards(a.position, b.position, speed * Time.fixedDeltaTime);
+        life -= opponentHitPoint;
     }
-    void OnTriggerEnter2D(Collider2D other)
-    {
 
+    public void SetTarget(Enemy target)
+    {
+        targetToAttack = target;
     }
 }

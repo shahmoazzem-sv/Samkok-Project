@@ -10,7 +10,7 @@ public class BattleIdleState : IState
     }
     public void Enter()
     {
-        Debug.Log("WE are in battle mode in idle state");
+        // Wait for the loading completion and battle start
         battleManager.onIdleWaitFinished += FinishTheIdle;
         battleManager.WaitForSec();
     }
@@ -28,7 +28,7 @@ public class BattleIdleState : IState
 
     public void Update()
     {
-        Debug.Log("Battle is going on .dhoom dhoom");
+        // Debug.Log("Currently the Battle is on IDLE state");
     }
 
 
