@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 using System;
+using TMPro;
 
 
 public enum BattleState
@@ -14,6 +15,7 @@ public enum BattleState
 
 public class BattleManager : MonoBehaviour
 {
+    [SerializeField] private TMP_Text winnerTable;
 
     public List<Player> players { get; private set; }
     public List<Enemy> enemies { get; private set; }
@@ -35,6 +37,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         currentState = BattleState.None;
+        winnerTable.gameObject.SetActive(false);
     }
 
 
@@ -56,7 +59,11 @@ public class BattleManager : MonoBehaviour
                 battleStateMachine.SetState(new BattleIdleState(this));
                 break;
             case BattleState.BattleAtttacking:
+
                 battleStateMachine.SetState(new BattleAttackingState(this));
+                break;
+            case BattleState.Finish:
+                battleStateMachine.SetState(new BattleFinishState(this));
                 break;
             default:
                 break;
@@ -92,6 +99,10 @@ public class BattleManager : MonoBehaviour
     }
 
 
-
+    public void ShowWinner(string winner)
+    {
+        winnerTable.gameObject.SetActive(true);
+        winnerTable.text = winner;
+    }
 
 }

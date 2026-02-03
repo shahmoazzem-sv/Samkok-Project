@@ -6,8 +6,10 @@ public class BattleAttackingState : IState
 {
     List<Player> players;
     List<Enemy> enemies;
+    BattleManager battleManager;
     public BattleAttackingState(BattleManager battleManager)
     {
+        this.battleManager = battleManager;
         players = battleManager.players;
         enemies = battleManager.enemies;
     }
@@ -67,6 +69,8 @@ public class BattleAttackingState : IState
 
     public void Update()
     {
-
+        bool allPlayerDead = players.All((player) => player.life <= 0);
+        bool allEnemiesDead = enemies.All((enemy) => enemy.life <= 0);
+        if (allPlayerDead || allEnemiesDead) battleManager.ChangeState(BattleState.Finish);
     }
 }

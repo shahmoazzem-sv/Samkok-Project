@@ -5,10 +5,10 @@ public class PlayerGotoOpponentState : IState
 {
 
     Player player;
-    private Transform targetTransform;
+    Enemy enemy;
 
     // Threshold to consider "reached" (e.g., 0.5 units away)
-    private float stopDistance = 2f;
+    // private float stopDistance = 2f;
 
 
     public PlayerGotoOpponentState(Player player)
@@ -19,12 +19,12 @@ public class PlayerGotoOpponentState : IState
 
     public void Enter()
     {
-        if (player.targetToAttack == null)
+        enemy = player.targetToAttack;
+        if (enemy == null)
         {
             player.ChangeState(EntityState.Idle);
             return;
         }
-        targetTransform = player.targetToAttack.transform;
 
         // Play walking/running animation here if needed
         // player.anim.Play("Walk");
@@ -39,21 +39,17 @@ public class PlayerGotoOpponentState : IState
 
     public void Update()
     {
-        // Safety check in case target is destroyed mid-chase
-        if (targetTransform == null) return;
 
         // 1. Check Distance
-        float distance = Vector2.Distance(player.transform.position, targetTransform.position);
-
-        if (distance <= stopDistance)
+        float distance = Vector2.Distance(player.transform.position, enemy.transform.position);
+        if (distance < 2f)
         {
             // 2. We have reached the target -> Raise the Event
             player.ChangeState(EntityState.Attack);
         }
         else
         {
-            // 3. Keep Moving
-            player.MoveSelfFromTo(player.transform, targetTransform);
+            player.MoveSelfFromTo(player.transform, enemy.transform);
         }
 
     }

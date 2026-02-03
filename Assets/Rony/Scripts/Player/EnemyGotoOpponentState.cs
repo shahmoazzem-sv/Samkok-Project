@@ -29,11 +29,11 @@ public class EnemyGotoOpponentState : IState
         float distance = Vector3.Distance(enemy.transform.position, player.transform.position);
         if (distance < 2f)
         {
-            Debug.Log(distance);
             enemy.ChangeState(EntityState.Attack);
         }
         else
         {
+            Debug.Log("enemy" + enemy.transform);
             enemy.MoveSelfFromTo(enemy.transform, player.transform);
         }
     }

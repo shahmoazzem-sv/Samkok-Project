@@ -15,13 +15,13 @@ public class PlayerSpawner : MonoBehaviour
         foreach (var playerSpawnPoint in PlayerSpawnPoints)
         {
             Debug.Log("Player Spawned");
-            GameObject player = Instantiate(PlayerPrefab, playerSpawnPoint.transform.position, Quaternion.identity);
+            GameObject player = Instantiate(PlayerPrefab, playerSpawnPoint.transform.position, PlayerPrefab.transform.rotation);
             Player playerSpawned = player.GetComponent<Player>();
             battleManager.AddPlayer(playerSpawned);
         }
         foreach (var enemySpawnPoint in EnemySpawnPoints)
         {
-            GameObject enemy = Instantiate(EnemyPrefab, enemySpawnPoint.transform.position, Quaternion.identity);
+            GameObject enemy = Instantiate(EnemyPrefab, enemySpawnPoint.transform.position, EnemyPrefab.transform.rotation);
             Enemy spawnedEnemy = enemy.GetComponent<Enemy>();
             battleManager.AddEnemy(spawnedEnemy);
         }

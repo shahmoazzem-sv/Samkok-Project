@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5448533310535968128
 Transform:
   m_ObjectHideFlags: 0
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250094088879791597}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 907, y: 375, z: 0}
   m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &7982396040598021992
 Animator:
   serializedVersion: 7
@@ -131,8 +131,10 @@ MonoBehaviour:
   rb: {fileID: 6345919749120895518}
   anim: {fileID: 7982396040598021992}
   speed: 10
-  gameState: 1
+  targetToAttack: {fileID: 0}
+  life: 100
   hitPoint: 10
+  isDead: 0
 --- !u!50 &6345919749120895518
 Rigidbody2D:
   serializedVersion: 5

@@ -1,17 +1,17 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
-    // take player positions
-    private List<GameObject> playerLocations;
     [SerializeField] Animator anim;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] TMP_Text scoreCard;
     EntityState currentState;
-    Transform original;
     public float life = 100;
-    public int hitPoint = 10;
-    public float speed = 0.0001f;
+    public int hitPoint = 12;
+    public float speed = 2f;
 
     public Player targetToAttack;
     StateMachine enemyStateMachine;
@@ -27,9 +27,7 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
-        PlayerPositions p = FindFirstObjectByType<PlayerPositions>().GetComponent<PlayerPositions>();
-        playerLocations = p.playerLocations;
-        original = transform;
+        scoreCard.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -45,17 +43,21 @@ public class Enemy : MonoBehaviour
         switch (currentState)
         {
             case EntityState.Idle:
-                Debug.Log("In debug mode");
-                // anim.Play("Idle");
+                anim.SetTrigger("Idle");
                 break;
             case EntityState.GotoOpponent:
+                anim.SetTrigger("Run");
                 enemyStateMachine.SetState(new EnemyGotoOpponentState(this));
                 break;
             case EntityState.Attack:
-                // Attack();
-                Debug.Log("Attack!!!!!!");
+                anim.SetTrigger("Attack1");
+                enemyStateMachine.SetState(new EnemyAttackState(this));
+                Debug.Log("Enemy Attack");
                 break;
             case EntityState.Die:
+                anim.SetTrigger("Die");
+                Debug.Log("Enemy Ded");
+                // Find game state for winning
                 break;
             default:
                 break;
@@ -67,6 +69,43 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int opponentHitPoint)
     {
+        Debug.Log("Enemy: " + life);
         life -= opponentHitPoint;
+        scoreCard.text = life.ToString();
+        StartCoroutine(TakeDamageTextAnimtaion());
+
+    }
+    IEnumerator TakeDamageTextAnimtaion()
+    {
+        scoreCard.gameObject.SetActive(true);
+        scoreCard.text = life.ToString();
+
+        Vector3 startPosition = scoreCard.transform.position;
+        Vector3 targetPosition = startPosition + Vector3.up * 2f;
+
+        float elapsed = 0f;
+        float duration = 0.75f; // Total time of the animation
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            // Calculate normalized time (0 to 1)
+            float t = elapsed / duration;
+
+            // Apply "Ease Out" effect (Starts fast, slows down at the end)
+            // Formula: 1 - (1 - t) * (1 - t)
+            float easedT = 1f - (1f - t) * (1f - t);
+
+            // Apply the position
+            scoreCard.transform.position = Vector3.Lerp(startPosition, targetPosition, easedT);
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Cleanup
+        scoreCard.gameObject.SetActive(false);
+        scoreCard.transform.position = startPosition;
     }
 }
