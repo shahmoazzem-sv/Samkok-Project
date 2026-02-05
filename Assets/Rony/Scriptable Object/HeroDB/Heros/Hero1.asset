@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a25401e0e7b0d4a95460bde162e970, type: 3}
+  m_Name: Hero1
+  m_EditorClassIdentifier: Assembly-CSharp::HeroCardSO
+  heroCardID: 1
+  heroSprite: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
+  heroPrefab: {fileID: 4228600389095706667, guid: c73fbc4e733b755409211204df372757, type: 3}
+  cardPrefab: {fileID: 606553326660362478, guid: 99aa24db64e47c64ab43516a1ed018f6, type: 3}
+  cardStars: 5
+  heroName: Niro
+  level: 2
+  maxHp: 100
+  superAttackRange: 200
+  speed: 5
